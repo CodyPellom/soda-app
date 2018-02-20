@@ -6,8 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var index = require('./controllers/index');
+var users = require('./controllers/users');
+const companyController = require('./controller/companyController')
 
 const app = express();
 
@@ -44,6 +45,10 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+app.use(function  (req, res) {
+  
+})
 
 // error handler
 app.use(function(err, req, res, next) {
