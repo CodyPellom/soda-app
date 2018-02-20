@@ -4,11 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+const app = express();
+
+mongoose.connect('mongodb:localhost/soda-app')
+
+const db = mongoose.connection
+
+db.on('open', () => {
+  console.log('success connected to mongoDB')
+})
+
+db.on('error', (err) => {
+  console.log(err)
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
