@@ -5,27 +5,55 @@ const company = require('../models/company')
 /* GET home page. */
 router.get('/', function (req, res) => {
 
-            //get all companies
-            Company.find().then((comapnies) => {
-                    res.send(companies)
-                })
-
+    //get all companies
+    Company.find().then((comapnies) => {
+            res.render('company/index', {
+                    companies: companies)
             })
 
-        // send all compnies to an HBS file
+    })
 
-        module.exports = router;
+})
 
-        //SHOW
+// send all compnies to an HBS file
 
-        //NEW
 
-        //CREATE
+//NEW
+//GET
+router.get('/new', (req, res) => {
+res.render('company/new')
+    
+})
+//CREATE
+//POST
+router.post('/', (req, res) => {
+    const newCompany = new Company({
+        name: req.body.name,
+        location: req.body.location})
+})
 
-        //EDIT
+newCompany.save().then((savedCompany) => {
+    res.redirect(`/companies/${savedCompany._id}`)
+})
 
-        //UPDATE
+//SHOW
+router.get('/:id', (req, res) => {
+    Company.findById(req.params.id).then((company) => {
+        res.render('company/show', {
+            company: company
+        })
+    })
+})
 
-        //DELETE
 
-        module.exports = router
+
+//EDIT
+//GET
+
+//UPDATE
+//PUT/PATCT
+
+//DSTROY
+//DELETE
+
+module.exports = router
